@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/product")
 public class ProductController {
 
     private final CategoryService categoryService;
@@ -84,7 +84,7 @@ public class ProductController {
 
     //todo Get category by ID
 
-    @PostMapping("/product/add")
+    @PostMapping("/add")
     public ResponseEntity<APIResponse<ProductDTO>> addProduct(@Valid @RequestBody ProductDTO dto)
     {
         ProductDTO savedProduct = productService.saveProduct(dto);
@@ -98,7 +98,7 @@ public class ProductController {
         );
     }
 
-    @PutMapping("/product/update")
+    @PutMapping("/update")
     public ResponseEntity<APIResponse<ProductDTO>> updateProduct(@RequestBody ProductDTO dto)
     {
         productService.updateProduct(dto);
@@ -111,7 +111,7 @@ public class ProductController {
         );
     }
 
-    @DeleteMapping("/product/delete/{productId}")
+    @DeleteMapping("/delete/{productId}")
     public ResponseEntity<APIResponse<ProductDTO>> deleteProduct(@PathVariable long productId)
     {
         productService.deleteProduct(productId);
@@ -124,7 +124,7 @@ public class ProductController {
         );
     }
 
-    @GetMapping("/product/fetch/forSeller/{sellerId}")
+    @GetMapping("/fetch/forSeller/{sellerId}")
     public ResponseEntity<PageDetails<ProductDTO>> fetchProductsBySeller(
             @PathVariable long sellerId,
             @RequestParam(value = "pageNumber", defaultValue = AppUtil.DEFAULT_PAGE_NUMBER) int pageNumber,
@@ -140,7 +140,7 @@ public class ProductController {
         );
     }
 
-    @GetMapping("/product/listAll")
+    @GetMapping("/listAll")
     public ResponseEntity<PageDetails<ProductDTO>> listAllProducts(
             @RequestParam(value = "pageNumber", defaultValue = AppUtil.DEFAULT_PAGE_NUMBER) int pageNumber,
             @RequestParam(value = "pageSize", defaultValue = AppUtil.DEFAULT_PAGE_SIZE) int pageSize,
@@ -155,7 +155,7 @@ public class ProductController {
         );
     }
 
-    @GetMapping("/product/listAll/byCategory/{categoryId}")
+    @GetMapping("/listAll/byCategory/{categoryId}")
     public ResponseEntity<PageDetails<ProductDTO>> listAllProductsForCategory(
             @RequestParam(value = "pageNumber", defaultValue = AppUtil.DEFAULT_PAGE_NUMBER) int pageNumber,
             @RequestParam(value = "pageSize", defaultValue = AppUtil.DEFAULT_PAGE_SIZE) int pageSize,
@@ -171,7 +171,7 @@ public class ProductController {
         );
     }
 
-    @GetMapping("/product/fetch/all")
+    @GetMapping("/fetch/all")
     public ResponseEntity<PageDetails<ProductDTO>> fetchAllProducts(
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "10") int pageSize,
@@ -180,12 +180,12 @@ public class ProductController {
         return ResponseEntity.ok(productService.getAllProducts(pageNumber, pageSize, sortBy, sortOrder));
     }
 
-    @GetMapping("/product/fetch/{productId}")
+    @GetMapping("/fetch/{productId}")
     public ResponseEntity<ProductDTO> fetchProduct(@PathVariable long productId) {
         return ResponseEntity.ok(productService.getProductObjForProductId(productId));
     }
 
-    @GetMapping("/product/search")
+    @GetMapping("/search")
     public ResponseEntity<PageDetails<ProductDTO>> searchProduct(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String category,
